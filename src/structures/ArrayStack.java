@@ -99,12 +99,12 @@ public class ArrayStack<T> implements Array<T>, Stack<T>{
         topIndex = -1;
     }
 
-    //TESTING METHODS
-    public void print() {
-        StringBuilder stringifiedInternalArray = new StringBuilder(size() + ": ");
+    @Override
+    public String toString() {
+        StringBuilder stringifiedInternalArray = new StringBuilder("[");
         for (int i = 0; i < size(); i++) {
-            stringifiedInternalArray.append(internalArray[i] + " ");
+            stringifiedInternalArray.append(internalArray[i] + ", ");
         }
-        System.out.println(stringifiedInternalArray);
+        return stringifiedInternalArray.toString();
     }
 }

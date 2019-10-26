@@ -162,12 +162,13 @@ public class ArrayDeque<T> implements Array<T>, Deque<T> {
         internalArray[frontIndex] = null;
     }
 
-    //TESTING METHODS
-    public void print() {
-        StringBuilder stringifiedInternalArray = new StringBuilder(internalArray.length + " : ");
+    @Override
+    public String toString() {
+        StringBuilder stringifiedInternalArray = new StringBuilder("[");
         for (int i = 0; i < internalArray.length; i++) {
-            stringifiedInternalArray.append(internalArray[i] + " ");
+            stringifiedInternalArray.append(internalArray[i] + ", ");
         }
-        System.out.println(stringifiedInternalArray);
+        stringifiedInternalArray.append("]");
+        return stringifiedInternalArray.toString();
     }
 }

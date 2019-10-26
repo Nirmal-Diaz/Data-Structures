@@ -3,7 +3,7 @@ package structures;
 public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
     private Node head = null;
     private Node tail = null;
-    private int size = 0; 
+    private int size = 0;
 
     private class Node {
         T data = null;
@@ -17,20 +17,20 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
         }
     }
 
-    //LIST INTERFACE METHODS
+    // LIST INTERFACE METHODS
     public int length() {
         return size;
     }
 
     public T get(int index) {
         if (isEmpty()) {
-            //Case: Get when empty
+            // Case: Get when empty
             throw new IllegalStateException("Linked list is empty");
         } else if ((index < 0) || (index > size - 1)) {
-            //Case: Get at an index that is out of bounds
+            // Case: Get at an index that is out of bounds
             throw new IllegalArgumentException("Index must honor the range '0 <= index <= size - 1'");
         } else {
-            //Case: Get at an index that is between bounds
+            // Case: Get at an index that is between bounds
             Node nodeAtIndex = getNode(index);
             return nodeAtIndex.data;
         }
@@ -38,13 +38,13 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
 
     public void set(int index, T newData) {
         if (isEmpty()) {
-            //Case: Set when empty
+            // Case: Set when empty
             throw new IllegalStateException("Linked list is empty");
         } else if ((index < 0) || (index > size - 1)) {
-            //Case: Set at an index that is out of bounds
+            // Case: Set at an index that is out of bounds
             throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size - 1'");
         } else {
-            //Case: Set at an index that is between bounds
+            // Case: Set at an index that is between bounds
             Node nodeAtIndex = getNode(index);
             nodeAtIndex.data = newData;
         }
@@ -56,7 +56,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
 
     public void add(int index, T data) {
         if (isEmpty() && index == 0) {
-            //Case: Add at head when empty
+            // Case: Add at head when empty
             Node newNode = new Node();
             newNode.data = data;
             newNode.next = newNode;
@@ -65,10 +65,10 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             tail = newNode;
             size++;
         } else if ((index < 0) || (index > size)) {
-            //Case: Add at an index that is out of bounds
+            // Case: Add at an index that is out of bounds
             throw new IllegalArgumentException("Index must honor the range '0 <= index <= size'");
         } else if (index == 0) {
-            //Case: Add at head when not empty
+            // Case: Add at head when not empty
             Node newNode = new Node();
             newNode.data = data;
             newNode.next = head;
@@ -77,7 +77,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             head = newNode;
             size++;
         } else if (index == size) {
-            //Case: Add at after the tail
+            // Case: Add at after the tail
             Node newNode = new Node();
             newNode.data = data;
             newNode.next = head;
@@ -86,7 +86,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             tail = newNode;
             size++;
         } else {
-            //Case: Add at an index that is between bounds
+            // Case: Add at an index that is between bounds
             Node nodeAtIndex = getNode(index);
             Node newNode = new Node();
             newNode.data = data;
@@ -100,20 +100,20 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
 
     public T remove(int index) {
         if (isEmpty()) {
-            //Case: Remove when empty
+            // Case: Remove when empty
             throw new IllegalStateException("Linked list is empty");
         } else if ((index < 0) || (index > size - 1)) {
-            //Case: Remove an index that is out of bounds
+            // Case: Remove an index that is out of bounds
             throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size - 1'");
         } else if ((index == 0) && (size == 1)) {
-            //Case: Remove head/tail when only 1 element is present
+            // Case: Remove head/tail when only 1 element is present
             T dataOfHead = head.data;
             head = null;
             tail = null;
             size--;
             return dataOfHead;
         } else if ((index == 0) && (size == 2)) {
-            //Case: Remove head when only 2 elements are present
+            // Case: Remove head when only 2 elements are present
             T dataOfHead = head.data;
             tail.next = tail;
             tail.previous = tail;
@@ -121,7 +121,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             size--;
             return dataOfHead;
         } else if ((index == size - 1) && (size == 2)) {
-            //Case: Remove tail when only 2 elements are present
+            // Case: Remove tail when only 2 elements are present
             T dataOfTail = tail.data;
             head.next = head;
             head.previous = head;
@@ -129,7 +129,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             size--;
             return dataOfTail;
         } else if ((index == 0) && (size > 2)) {
-            //Case: Remove head when more than 2 elements are present
+            // Case: Remove head when more than 2 elements are present
             T dataOfHead = head.data;
             head.next.previous = tail;
             tail.next = head.next;
@@ -137,7 +137,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             size--;
             return dataOfHead;
         } else if ((index == size - 1) && (size > 2)) {
-            //Case: Remove tail when more than 2 elements are present
+            // Case: Remove tail when more than 2 elements are present
             T dataOfTail = tail.data;
             tail.previous.next = head;
             head.previous = tail.previous;
@@ -145,7 +145,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             size--;
             return dataOfTail;
         } else {
-            //Case: Remove an index that is between bounds
+            // Case: Remove an index that is between bounds
             Node nodeAtIndex = getNode(index);
             nodeAtIndex.next.previous = nodeAtIndex.previous;
             nodeAtIndex.previous.next = nodeAtIndex.next;
@@ -154,7 +154,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
         }
     }
 
-    //DEQUE INTERFACE METHODS
+    // DEQUE INTERFACE METHODS
     public void push(T data) {
         add(size, data);
     }
@@ -170,18 +170,18 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
     public void unshift(T data) {
         add(0, data);
     }
-    
-    //UTILITY METHODS
+
+    // UTILITY METHODS
     private Node getNode(int index) {
         if (index <= ((size - 1) / 2)) {
-            //Case: Get an index near the front
+            // Case: Get an index near the front
             Node nodeAtIndex = head;
             for (int i = 0; i < index; i++) {
                 nodeAtIndex = nodeAtIndex.next;
             }
             return nodeAtIndex;
         } else {
-            //Case: Get an index near the rear
+            // Case: Get an index near the rear
             Node nodeAtIndex = tail;
             for (int i = size - 1; i > index; i--) {
                 nodeAtIndex = nodeAtIndex.previous;
@@ -194,24 +194,15 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
         return size == 0;
     }
 
-    //TESTING METHODS
-    public void print(boolean direction) {
-        if (direction) {
-            Node currentNode = head;
-            StringBuilder content = new StringBuilder("fwd: " + size + ": ");
-            for (int i = 0; i < size; i++) {
-                content.append(currentNode.data + " ");
-                currentNode = currentNode.next;
-            }
-            System.out.println(content);
-        } else {
-            Node currentNode = tail;
-            StringBuilder content = new StringBuilder("bwd: " + size + ": ");
-            for (int i = size - 1; i > -1; i--) {
-                content.append(currentNode.data + " ");
-                currentNode = currentNode.previous;
-            }
-            System.out.println(content);
+    @Override
+    public String toString() {
+        Node currentNode = head;
+        StringBuilder content = new StringBuilder("[");
+        for (int i = 0; i < size; i++) {
+            content.append(currentNode.data + ", ");
+            currentNode = currentNode.next;
         }
+        content.append("]");
+        return content.toString();
     }
 }

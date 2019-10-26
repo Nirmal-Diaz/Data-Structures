@@ -12,6 +12,10 @@ public class BinarySearchTree {
         Node right = null;
     }
 
+    public enum TreeTraversalOrder {
+        PRE_ORDER, IN_ORDER, POST_ORDER, LEVEL_ORDER
+    }
+
     public BinarySearchTree(int[] initialData) {
         for (int i = 0; i < initialData.length; i++) {
             add(initialData[i]);
@@ -57,61 +61,66 @@ public class BinarySearchTree {
         return size == 0;
     }
 
-    //UTILITY METHODS
-    void print(String order) {
-        System.out.print(size() + " : ");
+    @Override
+    public String toString() {
+        return print(TreeTraversalOrder.LEVEL_ORDER);
+    }
+
+    public String print(TreeTraversalOrder order) {
+        StringBuilder content = new StringBuilder("[");
         switch (order) {
-            case "pre":
-                printPreOrder(root);
+            case PRE_ORDER:
+                printPreOrder(root, content);
                 break;
-            case "in":
-                printInOrder(root);
+            case IN_ORDER:
+                printInOrder(root, content);
                 break;
-            case "post":
-                printPostOrder(root);
+            case POST_ORDER:
+                printPostOrder(root, content);
                 break;
-            case "level":
-                printLevelOrder();
+            case LEVEL_ORDER:
+                printLevelOrder(content);
                 break;
             default:
-                System.out.println("Invalid print order");
+                throw new IllegalArgumentException("Invalid print order");
         }
-        System.out.print("\n");
+        content.append("]");
+        System.out.println(content);
+        return content.toString();
     }
 
-    private void printPreOrder(Node node) {
+    private void printPreOrder(Node node, StringBuilder content) {
         if (node != null) {
-            System.out.print(node.data + " ");
-            printPreOrder(node.left);
-            printPreOrder(node.right);
+            content.append(node.data + ", ");
+            printPreOrder(node.left, content);
+            printPreOrder(node.right, content);
         }
     }
 
-    private void printInOrder(Node node) {
+    private void printInOrder(Node node, StringBuilder content) {
         if (node != null) {
-            printInOrder(node.left);
-            System.out.print(node.data + " ");
-            printInOrder(node.right);
+            printInOrder(node.left, content);
+            content.append(node.data + ", ");
+            printInOrder(node.right, content);
         }
     }
 
-    private void printPostOrder(Node node) {
+    private void printPostOrder(Node node, StringBuilder content) {
         if (node != null) {
-            printPostOrder(node.left);
-            printPostOrder(node.right);
-            System.out.print(node.data + " ");
+            printPostOrder(node.left, content);
+            printPostOrder(node.right, content);
+            content.append(node.data + ", ");
         }
     }
 
-    private void printLevelOrder() {
-        StringBuilder stringifiedTree = new StringBuilder();
+    private void printLevelOrder(StringBuilder stringifiedTree) {
         java.util.Deque<Node> printQueue = new ArrayDeque<>();
 
         if (root != null) {
             printQueue.add(root);
             while (!printQueue.isEmpty()) {
                 Node nextNode = (Node) printQueue.removeFirst();
-                stringifiedTree.append(nextNode.data + " ");
+                stringifiedTree.append(nextNode.data + ", ");
                 if (nextNode.left != null) {
                     printQueue.add(nextNode.left);
                 }
@@ -120,7 +129,5 @@ public class BinarySearchTree {
                 }
             }
         }
-        
-        System.out.println(stringifiedTree);
     }
 }

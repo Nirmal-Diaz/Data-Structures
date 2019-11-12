@@ -10,7 +10,7 @@ public class ArrayStack<T> implements Array<T>, Stack<T>{
 
     public ArrayStack(T[] initialData, int length) {
         if (length < initialData.length) {
-            throw new IllegalArgumentException("Length must exceed or equal to initialData.length");
+            throw new IllegalArgumentException("Length must honor the range 'initialData.length <= index'");
         } else {
             internalArray = new Object[length];
             for (int i = 0; i < initialData.length; i++) {
@@ -36,7 +36,7 @@ public class ArrayStack<T> implements Array<T>, Stack<T>{
             throw new IllegalStateException("Array stack is empty");
         } else if ((index < 0) || (index > size() - 1)) {
             //Case: Get at an index that is out of bounds
-            throw new IllegalArgumentException("Index must honor the range '0 <= index <= size - 1'");
+            throw new IllegalArgumentException("Index must honor the range '0 <= index <= size-1'");
         } else {
             //Case: Get at an index that is between bounds
             return (T)internalArray[index];
@@ -46,10 +46,10 @@ public class ArrayStack<T> implements Array<T>, Stack<T>{
     public void set(int index, T newData) {
         if (isEmpty()) {
             //Case: Set when empty
-            throw new IllegalStateException("Linked list is empty");
+            throw new IllegalStateException("Array stack is empty");
         } else if ((index < 0) || (index > size() - 1)) {
             //Case: Set at an index that is out of bounds
-            throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size - 1'");
+            throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size-1'");
         } else {
             //Case: Set at an index that is between bounds
             internalArray[index] = newData;
@@ -59,7 +59,7 @@ public class ArrayStack<T> implements Array<T>, Stack<T>{
     //STACK INTERFACE METHODS
     public void push(T data) {
         if (isFull()) {
-            throw new IllegalStateException("Stack overflow");
+            throw new IllegalStateException("Array stack overflow");
         } else {
             internalArray[++topIndex] = data;
         }
@@ -68,7 +68,7 @@ public class ArrayStack<T> implements Array<T>, Stack<T>{
     @SuppressWarnings("unchecked")
     public T pop() {
         if (isEmpty()) {
-            throw new IllegalStateException("Stack underflow");
+            throw new IllegalStateException("Array stack underflow");
         } else {
             return (T)internalArray[topIndex--];
         }

@@ -11,7 +11,7 @@ public class ArrayDeque<T> implements Array<T>, Deque<T> {
 
     public ArrayDeque(T[] initialData, int length) {
         if (length < initialData.length) {
-            throw new IllegalArgumentException("Length must exceed or equal to initialData.length");
+            throw new IllegalArgumentException("Length must exceed or equal to initial data length");
         } else {
             internalArray = new Object[length];
             for (int i = 0; i < initialData.length; i++) {
@@ -35,7 +35,7 @@ public class ArrayDeque<T> implements Array<T>, Deque<T> {
         if (isEmpty()) {
             throw new IllegalStateException("Deque underflow");
         } else if ((index > rearIndex) || (index < frontIndex)) {
-            throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size - 1'");
+            throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size-1'");
         } else {
             index = frontIndex + index;
             if (index > internalArray.length - 1) {
@@ -48,9 +48,9 @@ public class ArrayDeque<T> implements Array<T>, Deque<T> {
 
     public void set(int index, T newData) {
         if (isFull()) {
-            throw new IndexOutOfBoundsException("Deque overflow");
+            throw new IllegalStateException("Deque overflow");
         } else if ((index >= internalArray.length) || (index < 0)) {
-            throw new ArrayIndexOutOfBoundsException("No such index exists");
+            throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size'");
         } else {
             index = frontIndex + index;
             if (index > internalArray.length - 1) {
@@ -64,7 +64,7 @@ public class ArrayDeque<T> implements Array<T>, Deque<T> {
     //DEQUE INTERFACE METHODS
     public void push(T data) {
         if (isFull()) {
-            throw new IndexOutOfBoundsException("Deque overflow");
+            throw new IllegalStateException("Deque overflow");
         } else if (isEmpty()) {
             internalArray[rearIndex] = data;
         } else if (rearIndex == internalArray.length - 1) {
@@ -78,7 +78,7 @@ public class ArrayDeque<T> implements Array<T>, Deque<T> {
     @SuppressWarnings("unchecked")
     public T pop() {
         if (isEmpty()) {
-            throw new IndexOutOfBoundsException("Deque underflow");
+            throw new IllegalStateException("Deque underflow");
         } else if (rearIndex == frontIndex) {
             T rearElement = (T)internalArray[rearIndex];
             internalArray[rearIndex] = null;
@@ -99,7 +99,7 @@ public class ArrayDeque<T> implements Array<T>, Deque<T> {
     @SuppressWarnings("unchecked")
     public T shift() {
         if (isEmpty()) {
-            throw new IndexOutOfBoundsException("Deque underflow");
+            throw new IllegalStateException("Deque underflow");
         } else if (frontIndex == rearIndex) {
             T frontElement = (T)internalArray[frontIndex];
             internalArray[frontIndex] = null;
@@ -119,7 +119,7 @@ public class ArrayDeque<T> implements Array<T>, Deque<T> {
 
     public void unshift(T data) {
         if (isFull()) {
-            throw new IndexOutOfBoundsException("Deque overflow");
+            throw new IllegalStateException("Deque overflow");
         } else if (isEmpty()) {
             internalArray[frontIndex] = data;
         } else if (frontIndex == 0) {

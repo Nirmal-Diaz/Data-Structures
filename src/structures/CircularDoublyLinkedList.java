@@ -28,7 +28,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             throw new IllegalStateException("Linked list is empty");
         } else if ((index < 0) || (index > size - 1)) {
             // Case: Get at an index that is out of bounds
-            throw new IllegalArgumentException("Index must honor the range '0 <= index <= size - 1'");
+            throw new IllegalArgumentException("Index must honor the range '0 <= index <= size-1'");
         } else {
             // Case: Get at an index that is between bounds
             Node nodeAtIndex = getNode(index);
@@ -42,7 +42,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             throw new IllegalStateException("Linked list is empty");
         } else if ((index < 0) || (index > size - 1)) {
             // Case: Set at an index that is out of bounds
-            throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size - 1'");
+            throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size-1'");
         } else {
             // Case: Set at an index that is between bounds
             Node nodeAtIndex = getNode(index);
@@ -104,7 +104,7 @@ public class CircularDoublyLinkedList<T> implements List<T>, Deque<T> {
             throw new IllegalStateException("Linked list is empty");
         } else if ((index < 0) || (index > size - 1)) {
             // Case: Remove an index that is out of bounds
-            throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size - 1'");
+            throw new IndexOutOfBoundsException("Index must honor the range '0 <= index <= size-1'");
         } else if ((index == 0) && (size == 1)) {
             // Case: Remove head/tail when only 1 element is present
             T dataOfHead = head.data;

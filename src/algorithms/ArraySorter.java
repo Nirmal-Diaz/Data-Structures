@@ -29,8 +29,14 @@ public class ArraySorter {
         //2. Scan the list and swap the next minimum element with the second element
         //3. Continue until the array is sorted
         for (int i = 0; i < array.length; i++) {
-            int smallestValueIndex = SortingUtilities.getMinValueIndex(array, i);
-            int smallestValueOfRange = array[smallestValueIndex];
+            int smallestValueIndex = 0;
+            int smallestValueOfRange = Integer.MAX_VALUE;
+            for (int j = i; j < array.length; j++) {
+                if (array[j] < smallestValueOfRange) {
+                    smallestValueOfRange = array[j];
+                    smallestValueIndex = j;
+                }
+            }
             array[smallestValueIndex] = array[i];
             array[i] = smallestValueOfRange;
         }
@@ -40,19 +46,20 @@ public class ArraySorter {
         //Bubble Sort Procedure
         //1. Compare each adjacent pairs of elements and promote smallest of each pair by a swap (eg. Indices 0and1, 1and2, 2and3 .......)
         //2. After the first round, check if there were any swaps. If yes repeat the above. Else the array is sorted
-        boolean swapsOccurredLastRound = true;
-        while (swapsOccurredLastRound) {
-            boolean swapsOccurredThisRound = false;
-            for (int i = 0; i < array.length - 1; i++) {
-                if (array[i + 1] < array[i]) {
-                    int smallerValue = array[i + 1];
-                    array[i + 1] = array[i];
-                    array[i] = smallerValue;
-                    swapsOccurredThisRound = true;
+        int i = array.length - 1;
+        boolean swapsOccurred = false;
+        do {
+            swapsOccurred = false;
+            for (int j = 0; j < i; j++) {
+                if (array[j + 1] < array[j]) {
+                    int smallerValue = array[j + 1];
+                    array[j + 1] = array[j];
+                    array[j] = smallerValue;
+                    swapsOccurred = true;
                 }
             }
-            swapsOccurredLastRound = swapsOccurredThisRound;
-        }
+            i--;
+        } while (i > 1 && swapsOccurred == true);
     }
 
     public static void quicksort(int[] array, int startIndex, int endIndex) {
@@ -78,19 +85,5 @@ public class ArraySorter {
 
     public static void mergeSort() {
         //Merge Sort Procedure (Divide And Conquer)
-    }
-}
-
-class SortingUtilities {
-    static int getMinValueIndex(int[] array, int startingIndex) {
-        int smallestValueIndex = 0;
-        int smallestValueOfRange = Integer.MAX_VALUE;
-        for (int i = startingIndex; i < array.length; i++) {
-            if (array[i] < smallestValueOfRange) {
-                smallestValueOfRange = array[i];
-                smallestValueIndex = i;
-            }
-        }
-        return smallestValueIndex;
     }
 }
